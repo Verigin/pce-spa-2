@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Login from './login/';
+import List from './list/';
 import Root from "./components/Root";
 import Home from "./components/Home";
 import { browserHistory} from "react-router";
@@ -25,7 +26,7 @@ ReactDOM.render(
             <Route exact path={"/"} component={App} />    
             <Route path={"/login"} component={Login} />    
             <Route path={"/home"} component={Home} />
-            
+            <Route path={"/list"} component={List} />
         </Root>
     </div>
 </Router>,
