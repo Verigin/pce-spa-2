@@ -6,6 +6,8 @@ import Login from './login/';
 import Root from "./components/Root";
 import Home from "./components/Home";
 import { browserHistory} from "react-router";
+//import PouchDB from 'pouchdb-react';
+
 //import { Router, Route  } from 'react-router'
 //import { Router, Route, BrowserRouter  } from 'react-router-dom'
 import {

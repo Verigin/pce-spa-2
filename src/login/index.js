@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '../logo.svg';
 import config, {environments, switchEnvironment} from "../config";
 import {session} from "../session";
+import PouchDB from 'pouchdb';
 
 import '../App.css';
 import '../index.css';
@@ -60,7 +61,8 @@ onLoginPressed = (event) => {
 
   const username = this.state.user;
   const password = this.state.password; 
-  
+  let METHOD_GET = 'GET';
+  let METHOD_POST = 'POST';
   api.login(username, password)
       .then(data => {
           if (data.success === true) {
@@ -78,8 +80,47 @@ onLoginPressed = (event) => {
               // Begin synchronization
              // synchronizeUser(username, password);
             //  Clipboard.setString(undefined);
+
+            // let link = config.couchDB(username,password);
+            // //api._exec(METHOD_GET, link);
+            // let promise;
+            // let headers = {
+            //   "Access-Control-Allow-Origin": "*",
+            //   "Access-Control-Allow-Methods": "POST, OPTIONS",      
+            //   //'Accept': 'application/json',        
+            //   'Content-Type' : 'application/json; charset=utf-8',
+            //   'Authorization'  :'Basic '+ btoa(username + ':' + password)              
+            //   };
+            // //var headers = new Headers();
+            // //headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+            // promise = fetch(config.baseURL + "/couchdb/", {
+            //   method: METHOD_POST,
+            //   //body: JSON.stringify(params),
+            //   headers: headers,
+            //   responseType: 'json',
+            //   withCredentials: true,
+            //   mode: 'cors',
+            //   follow: 0
+            // })
+            // .then(data => {
+            //    console.log(data); 
+            // });
+            //https://verigin.aleks@gmail.com:yalsaudo0603@palettecollector.com/couchdb/
+            
+            let localDB = null;
+            let remoteDB = null;
+            localDB  = new PouchDB('mydb2');
+            localDB.put({'_id':'3','name':'Alex'}).then(()=>console.log('put'));
+            //remoteDB = new PouchDB('https://'+username+':'+password+"@palettecollector.com/couchdb/");
+
+            // localDB.replicate.form(remoteDB).on('complete', function () {
+            //   console.log('done');
+            // }).on('error', function (err) {
+            //   // boo, something went wrong!
+            // });
+
             this.setState({
-              loginMessage: "login in progress",
+              loginMessage: "login in progress ",
               inProgress: true,
               class: 'alert alert-success'               
             }); 
@@ -107,7 +148,7 @@ onLoginPressed = (event) => {
 
 
   render() {
-
+    
     let loginMessage;
     if (this.state.loginMessage) {
       loginMessage = <div class={this.state.class} >
@@ -116,7 +157,7 @@ onLoginPressed = (event) => {
     }
     return (
 
-     
+ 
      <div className="container-fluid noPadding">
           <header className="jumbotron">
             <img src={logo} className="App-logo" alt="logo" />
@@ -146,7 +187,10 @@ onLoginPressed = (event) => {
     <div className="card-body">
     
     {loginMessage}
-    
+    {
+   
+      
+    }
       <h5 className="card-title">Card title</h5>
 
           <form onSubmit={this.onLoginPressed}>

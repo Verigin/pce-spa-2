@@ -48,7 +48,7 @@ export default class Api {
       case METHOD_GET:
         promise = fetch(config.baseURL + url + queryString.stringify(params), {
           method: METHOD_GET,
-          mode: 'no-cors',
+          mode: 'cors',
           follow: 0,
           headers: headers
         });
