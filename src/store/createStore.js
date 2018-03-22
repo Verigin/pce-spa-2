@@ -31,7 +31,7 @@ var sync = db.sync(remotedb, {
     live: true,
     retry: true
 }).on('change', function (info) {
-    console.log(info);
+    console.log(info);    
 }).on('paused', function (err) {
     console.log(err);
 }).on('active', function () {
@@ -40,13 +40,58 @@ var sync = db.sync(remotedb, {
     console.log(err);
 }).on('complete', function (info) {
     console.log(info);
+    //store.dispatch({type: 'CHANGE_DATA', playload: 'Smells like spirit'});
+
+    
 }).on('error', function (err) {
     console.log(err);
 });
 
 //sync.cancel(); 
 
-export default db;
+const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+function reducer(state = [],action) {
+    if (action.type === 'CHANGE_DATA')
+    {
+        //console.log('reducer', action.docs);             
+        state = action.docs.slice();
+        //  return [
+        //      ...state,
+        //    action.docs
+        // ]
+    }
+    //console.log(action);
+    return state;
+}
+
+
+console.log('getState ',store.getState());
+//store.dispatch({type: 'CHANGE_DATA', playload: 'Smells like spirit'});
+
+store.subscribe(() => {
+    console.log('getState', store.getState());  
+})
+
+db.allDocs({
+    include_docs: true,
+    attachments: true
+  }).then(function (result) {
+    console.log(result);
+    //var mylist = result.rows;
+    const docs = result.rows
+                    .map(row => row.doc)
+                    .filter(doc => doc.type === 'item');
+    console.log("from database", docs);                
+    store.dispatch({
+        type: 'CHANGE_DATA',
+        docs
+    });    
+  }).catch(function (err) {
+    console.log(err);
+  });   
+
+export default store;
 
 
 
