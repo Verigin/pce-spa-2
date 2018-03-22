@@ -7,7 +7,7 @@ class List extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            list: [{doc: {artist:'loading...'}}]
+            list: [{doc: {artist:'loadingg...'}}]
         }    
         this.onLoad=this.onLoad.bind(this);
     }   
