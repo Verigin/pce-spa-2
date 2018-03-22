@@ -13,6 +13,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "reactstrap": "^5.0.0-beta.2",
+    "redux": "3.7.2",
     "redux-pouchdb": "0.1.1"
   },
   "scripts": {
