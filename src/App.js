@@ -11,16 +11,15 @@ class App extends Component {
   
   render() {
     return (
-      <div className="App1">       
+      <div className="container-fluid noPadding">       
         <div className='container'>
-          <h1>App</h1>
+        <div className="row">
           <ul>
             <li><Link to='/'>Home</Link></li>             
             <li><Link to='/login'>Login</Link></li>           
             <li><Link to='/list'>List</Link></li>
           </ul>
-          {/* добавили вывод потомков */}
-          {this.props.children}
+          </div>
       </div>
 
       </div>
