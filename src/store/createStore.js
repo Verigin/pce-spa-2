@@ -42,7 +42,7 @@ var sync = db.sync(remotedb, {
     console.log(info);
     //store.dispatch({type: 'CHANGE_DATA', playload: 'Smells like spirit'});
 
-    
+
 }).on('error', function (err) {
     console.log(err);
 });
@@ -69,14 +69,14 @@ function reducer(state = [],action) {
 console.log('getState ',store.getState());
 //store.dispatch({type: 'CHANGE_DATA', playload: 'Smells like spirit'});
 
-store.subscribe(() => {
-    console.log('getState', store.getState());  
-})
+// store.subscribe(() => {
+//     console.log('getState', store.getState());  
+// })
 
 db.allDocs({
     include_docs: true,
     attachments: true
-  }).then(function (result) {
+}).then(function (result) {
     console.log(result);
     //var mylist = result.rows;
     const docs = result.rows
@@ -87,9 +87,9 @@ db.allDocs({
         type: 'CHANGE_DATA',
         docs
     });    
-  }).catch(function (err) {
+}).catch(function (err) {
     console.log(err);
-  });   
+});   
 
 export default store;
 
