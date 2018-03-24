@@ -5,6 +5,7 @@ import config, { environments, switchEnvironment } from "../config";
 import { session } from "../session";
 import PouchDB from 'pouchdb';
 import Api from '../common/api';
+import { sinhronization } from '../store/database';
 
 const api = new Api;
 
@@ -69,6 +70,8 @@ class Login extends React.Component {
             inProgress: true,
             class: 'alert alert-success'
           });
+          console.log('try auth ',session.user.email,session.user.password);
+          sinhronization(username, password);
           // resetToHome(this.props.navigation);
           return false;
         }
@@ -102,8 +105,8 @@ class Login extends React.Component {
         <div className="container">
           <div className="row">
             <ul>
-              <li><Link to='/'>Main</Link></li>
-              <li><Link to='/list'>List</Link></li>
+              <li><Link to='/'>Main</Link></li>                          
+              <li><Link to='/list'>List</Link></li>            
             </ul>
           </div>
           <div className="row">

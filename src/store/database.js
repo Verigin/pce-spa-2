@@ -6,7 +6,12 @@ import store from './store.js';
 import { session } from "../session";
 
 const db = new PouchDB('pce-spa');
-const remotedb = createRemoteDatabase(session.user.email,session.user.password);
+
+//обернуть все в функцию синхронизации при логине
+export function sinhronization(username,password)
+{
+const remotedb = createRemoteDatabase(username,password);
+// const remotedb = createRemoteDatabase('verigin.aleks@gmail.com','yalsaudo0603');
 
 function databaseName(username) {
     username = username.toLocaleLowerCase().trim();
@@ -19,6 +24,7 @@ function databaseName(username) {
 
 function createRemoteDatabase (username, password) {
     let usernameLowercase = username.toLocaleLowerCase().trim();
+    console.log(`${config.couchDB(usernameLowercase, password)}${databaseName(usernameLowercase)}`);
     let remoteDB = new PouchDB(`${config.couchDB(usernameLowercase, password)}${databaseName(usernameLowercase)}`, {
         skip_setup: true
     });
@@ -42,7 +48,7 @@ var sync = db.sync(remotedb, {
 }).on('error', function (err) {
     console.log(err);
 });
-
+}
 //sync.cancel(); 
 
 export default db;
