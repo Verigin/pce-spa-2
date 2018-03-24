@@ -11,14 +11,14 @@ export default class Api {
   constructor() {
   }
 
-  login(user, password){
+  login(user, password) {
     let url = '/user/login';
-    return this._exec(METHOD_POST, url, {email: user, password})
+    return this._exec(METHOD_POST, url, { email: user, password })
   }
 
   register(name, email, password) {
     let url = '/user';
-    return this._exec(METHOD_PUT, url, {name, email, password})
+    return this._exec(METHOD_PUT, url, { name, email, password })
   }
 
   errorSummary(data) {
@@ -34,11 +34,11 @@ export default class Api {
     let promise;
     let headers = {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",      
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
       //'Accept': 'application/json',        
-      'Content-Type' : 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8',
       //'Accept':'application/json; charset=utf-8',
-      };
+    };
 
     for (let key in additionalHeaders) {
       headers[key] = additionalHeaders[key];
@@ -91,13 +91,13 @@ export default class Api {
           throw new Error('Error: ' + message);
         } else {
           let message = json && json.hasOwnProperty('message') ? json.message : 'Error, httpCode=' + httpStatus;
-         
+
           throw new Error(message);
         }
       })
         .then(jsonData => {
           resolve(jsonData);
-        
+
         })
         .catch(e => {
           console.warn(e);

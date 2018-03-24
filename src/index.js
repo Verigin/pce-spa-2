@@ -1,37 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider } from 'react-redux';
+import { BrowserRouter as Router,Route } from 'react-router-dom';
+import Root from './components/Root';
+
+import store from './store/store.js';
 import './index.css';
 import App from './App';
 import Login from './login/';
-import List from './list/';
-import Root from "./components/Root";
-import Home from "./components/Home";
-import { browserHistory} from "react-router";
-//import PouchDB from 'pouchdb-react';
+import Items from './items/';  
 
-//import { Router, Route  } from 'react-router'
-//import { Router, Route, BrowserRouter  } from 'react-router-dom'
-import {
-    BrowserRouter as Router,
-    Route
-  } from 'react-router-dom';
-
-import registerServiceWorker from './registerServiceWorker';
-
-//ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
-    <Router>
-    <div>
-        <Root>
-            <Route exact path={"/"} component={App} />    
-            <Route path={"/login"} component={Login} />    
-            <Route path={"/home"} component={Home} />
-            <Route path={"/list"} component={List} />
-        </Root>
-    </div>
-</Router>,
+    <Provider store={store}>
+        <Router>
+            <Root>
+                <Route exact path={"/"} component={App} />
+                <Route path={"/login"} component={Login} />
+                <Route path={"/list"} component={Items} />      
+            </Root>
+        </Router>
+    </Provider>,
     document.getElementById('root')
-  )
-registerServiceWorker();
+)
+
 
 
