@@ -6,9 +6,10 @@ import store from './store.js';
 import { session } from "../session";
 
 const db = new PouchDB('pce-spa');
+var sync = null;
 
 //обернуть все в функцию синхронизации при логине
-export function sinhronization(username,password)
+export function sinhronize(username,password)
 {
 const remotedb = createRemoteDatabase(username,password);
 // const remotedb = createRemoteDatabase('verigin.aleks@gmail.com','yalsaudo0603');
@@ -31,7 +32,7 @@ function createRemoteDatabase (username, password) {
     return remoteDB;
 };
 
-var sync = db.sync(remotedb, {
+sync = db.sync(remotedb, {
     live: true,
     retry: true
 }).on('change', function (info) {
@@ -48,6 +49,10 @@ var sync = db.sync(remotedb, {
 }).on('error', function (err) {
     console.log(err);
 });
+}
+
+export function cancelSync () {
+    sync.cancel();  
 }
 //sync.cancel(); 
 

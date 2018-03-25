@@ -16,3 +16,7 @@ export const getAllItems = () => dispatch => {
         console.log(err);
     }); 
 }
+
+export const authSuccess = () => dispatch => {
+    dispatch({type: 'AUTH_SUCCESS'});
+}
