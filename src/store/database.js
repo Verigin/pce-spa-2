@@ -5,14 +5,9 @@ import { getAllItems }  from '../actions/items';
 import store from './store.js';
 import { session } from "../session";
 
-const db = new PouchDB('pce-spa5');
-var sync = null;
-var rep = null;
-
-//обернуть все в функцию синхронизации при логине
-export function sinhronize(username,password)
-{
-
+let db = new PouchDB('pce-spa6'); 
+let sync = null;
+let rep = null;
 
 function databaseName(username) {
     username = username.toLocaleLowerCase().trim();
@@ -32,60 +27,46 @@ function createRemoteDatabase (username, password) {
     return remoteDB;
 };
 
-const remotedb = createRemoteDatabase(username,password);
+export function sinhronize(username,password)
+{
 
 
-    // db.allDocs({
-    //     include_docs: true,
-    //     attachments: true
-    // }).then(function (result) {
-    //     // Promise isn't supported by all browsers; you may want to use bluebird
-    //     return Promise.all(result.rows.map(function (row) {
-    //         return db.remove(row.id, row.value.rev);
-    //     }));
-    // }).then(function () {
+db.get('me').then(function (doc) {
+    console.log("found username in local db : " + doc.email + " logged in user: " + username);
+    if(doc.email.toLocaleLowerCase().trim() == username.toLocaleLowerCase().trim()){
+        
+        const remotedb = createRemoteDatabase(username,password);
 
-    // rep = db.replicate.from(remotedb, {
-    //     live: true,
-    //     retry: true
-    // }).on('change', function (info) {
-    //     console.log('change', info);
-    //     store.dispatch(getAllItems());
-    // }).on('paused', function (err) {
-    //     console.log('paused',err);
-    // }).on('active', function () {  
-    //     console.log('active'); 
-    // }).on('denied', function (err) {
-    //     console.log('denied',err);
-    // }).on('complete', function (info) {
-    //     console.log('complete',info);  
-    // }).on('error', function (err) {
-    //     console.log('error',err);
-    // });    
-
-
-//   }).catch(function (err) {
-//     // error!
-//   });
-
-sync = db.sync(remotedb, {
-    live: true,
-    retry: true
-}).on('change', function (info) {
-    console.log('change', info);
-    store.dispatch(getAllItems());
-}).on('paused', function (err) {
-    console.log('paused', err);
-}).on('active', function () {
-    console.log('active');
-}).on('denied', function (err) {
-    console.log('denied', err);
-}).on('complete', function (info) {
-    console.log('complete', info);
-}).on('error', function (err) {
-    console.log('error', err);
+        sync = db.sync(remotedb, {
+            live: true,
+            retry: true
+        }).on('change', function (info) {
+            console.log('change', info);
+            store.dispatch(getAllItems());
+        }).on('paused', function (err) {
+            console.log('paused', err);
+        }).on('active', function () {
+            console.log('active');
+        }).on('denied', function (err) {
+            console.log('denied', err);
+        }).on('complete', function (info) {
+            console.log('complete', info);
+        }).on('error', function (err) {
+            console.log('error', err);
+        });
+       
+        
+    }else{
+        console.log("destroying database");
+        db.destroy().then(function(){db = new PouchDB('pce-spa6'); });
+    }
+}).catch(function (err) {
+    console.log(" could not read user from local db. maybe it's the first app init" + err);
+    
 });
+
 }
+
 
 export function cancelSync () {
     //rep.cancel();  
