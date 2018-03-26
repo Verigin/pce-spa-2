@@ -10,10 +10,12 @@ class List extends Component {
     }
 
     render() {
-        return (
+        return (            
             <div className="container-fluid noPadding">
-                <div className='container'>                    
+                <div className='container'>  
+                log in throught mobile app and add/delete some items                  
                     <div className="row">
+                    
                     <ul class="list-group">
                         {this.props.testStore.data.map((item, index) =>
                             <li class="list-group-item" key={index}>{item.inventoryNumber} {item.title} {item.year}</li>

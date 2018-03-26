@@ -143,6 +143,10 @@ class Login extends React.Component {
                         required="required" />
                     </div>
                     <button type="submit" className="btn btn-primary" >Submit</button>
+                    <br/>
+                    user: pcespa5@mail.ru <br/>
+                    password: pcespa5 <br/>
+                    don`t use real user<br/> there is synchronization problem!
                   </form>
                 </div>
               </div>
