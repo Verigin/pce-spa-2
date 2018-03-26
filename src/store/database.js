@@ -27,44 +27,47 @@ function createRemoteDatabase (username, password) {
     return remoteDB;
 };
 
-export function sinhronize(username,password)
+
+function syncDB(username, password)
 {
+    const remotedb = createRemoteDatabase(username,password);
+    console.log('start syncDB');      
+    sync = db.sync(remotedb, {
+        live: true,
+        retry: true
+    }).on('change', function (info) {
+        console.log('change', info);
+        store.dispatch(getAllItems());
+    }).on('paused', function (err) {
+        console.log('paused', err);
+    }).on('active', function () {
+        console.log('active');
+    }).on('denied', function (err) {
+        console.log('denied', err);
+    }).on('complete', function (info) {
+        console.log('complete', info);
+    }).on('error', function (err) {
+        console.log('error', err);
+    });
+}
 
-
-db.get('me').then(function (doc) {
-    console.log("found username in local db : " + doc.email + " logged in user: " + username);
-    if(doc.email.toLocaleLowerCase().trim() == username.toLocaleLowerCase().trim()){
-        
-        const remotedb = createRemoteDatabase(username,password);
-
-        sync = db.sync(remotedb, {
-            live: true,
-            retry: true
-        }).on('change', function (info) {
-            console.log('change', info);
-            store.dispatch(getAllItems());
-        }).on('paused', function (err) {
-            console.log('paused', err);
-        }).on('active', function () {
-            console.log('active');
-        }).on('denied', function (err) {
-            console.log('denied', err);
-        }).on('complete', function (info) {
-            console.log('complete', info);
-        }).on('error', function (err) {
-            console.log('error', err);
-        });
-       
-        
-    }else{
-        console.log("destroying database");
-        db.destroy().then(function(){db = new PouchDB('pce-spa6'); });
-    }
-}).catch(function (err) {
-    console.log(" could not read user from local db. maybe it's the first app init" + err);
-    
-});
-
+export function sinhronize(username, password) {
+    db.get('me').then(function (doc) {
+        console.log("found username in local db : " + doc.email + " logged in user: " + username);
+        if (doc.email.toLocaleLowerCase().trim() == username.toLocaleLowerCase().trim()) {
+            syncDB(username, password);
+        } else {
+            console.log("destroying database");
+            db.destroy().then(function () {
+                db = new PouchDB('pce-spa6');
+                const remotedb = createRemoteDatabase(username, password);
+                syncDB(username, password);
+            });
+        }
+    }).catch(function (err) {
+        console.log(" could not read user from local db. maybe it's the first app init" + err);
+        syncDB(username, password);
+    });
 }
 
 
