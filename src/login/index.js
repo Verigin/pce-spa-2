@@ -63,15 +63,17 @@ class Login extends React.Component {
     api.login(username, password)
       .then(data => {
         if (data.success === true) {
+          console.log('try to auth like ',username,password);
+          console.log(data.data);
           session.user = data.data;
           session.user.email = session.user.email.toLowerCase();
-          console.log(session.user);
+          //console.log(session.user);
           this.setState({
             loginMessage: "login in progress ",
             inProgress: true,
             class: 'alert alert-success'
           });
-          console.log('try sinhronize ',session.user.email,session.user.password);
+          console.log('try sinhronize ',username,password);
           sinhronize(username, password);
           this.props.onAuthSuccess();
           this.props.history.push('/items');

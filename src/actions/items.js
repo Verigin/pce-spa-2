@@ -5,12 +5,12 @@ export const getAllItems = () => dispatch => {
         include_docs: true,
         attachments: true
     }).then(function (result) {
-        console.log(result);
+        //console.log("getAllItems",result);
         //var mylist = result.rows;
         const docs = result.rows
             .map(row => row.doc)
             .filter(doc => doc.type === 'item');
-        console.log("from database", docs);                
+        console.log("getAllItems from local database", docs);                
         dispatch({type: 'CHANGE_DATA',docs});    
     }).catch(function (err) {
         console.log(err);

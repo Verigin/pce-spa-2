@@ -57,6 +57,7 @@ export default class Api {
       case METHOD_PUT:
       case METHOD_DELETE:
       case METHOD_POST:
+        console.log(JSON.stringify(params));
         promise = fetch(config.baseURL + url, {
           method: method,
           body: JSON.stringify(params),
