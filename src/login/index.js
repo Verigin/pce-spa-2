@@ -5,7 +5,7 @@ import PouchDB from 'pouchdb';
 import config, { environments, switchEnvironment } from "../config";
 import { session } from "../session";
 import Api from '../common/api';
-import { sinhronize } from '../store/database';
+import { sinhronize, openRemoteDb } from '../store/database';
 import { authSuccess } from '../actions/items';
 
 const api = new Api;
@@ -73,8 +73,9 @@ class Login extends React.Component {
             inProgress: true,
             class: 'alert alert-success'
           });
-          console.log('try sinhronize ',username,password);
-          sinhronize(username, password);
+          // console.log('try sinhronize ',username,password);
+          // sinhronize(username, password);
+          openRemoteDb(username, password);
           this.props.onAuthSuccess();
           this.props.history.push('/items');
           // resetToHome(this.props.navigation);

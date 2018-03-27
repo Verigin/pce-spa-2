@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAllItems } from '../actions/items';
+import { onGetAllItems } from '../actions/items';
 
 class List extends Component {
 
-    componentDidMount() {
-        this.props.onGetAllItems();
-    }
+    // componentDidMount() {
+    //     this.props.onGetAllItems();
+    // }
 
     render() {
         return (            
@@ -33,9 +33,9 @@ export default connect(
         testStore: state
     }),
     dispatch => ({
-        onGetAllItems: () => {
-            dispatch(getAllItems());
-        }
+        // onGetAllItems: () => {
+        //     dispatch(onGetAllItems());
+        // }
     })
 )(List);
 

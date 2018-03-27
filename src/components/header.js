@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { session } from "../session";
 import { connect } from 'react-redux';
-import { cancelSync } from '../store/database';
+import { closeRemoteDb } from '../store/database';
 
 class Header extends Component {
     render() {
@@ -25,7 +25,6 @@ class Header extends Component {
                     </div>
                 </div>             
             </div>
-
         )
     }
 }
@@ -37,7 +36,7 @@ export default connect(
     dispatch => ({
         onLogout: () => {
             dispatch({type: "LOGOUT"});
-            cancelSync();
+            closeRemoteDb(); 
         }
     })
 )(Header);
