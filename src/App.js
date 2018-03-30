@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <div className="container-fluid noPadding">
+      <div className='container-fluid noPadding'>
         <div className='container'>
-          <div className="row">
+          <div className='row'>
             <h1>React App</h1>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
