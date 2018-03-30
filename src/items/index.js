@@ -50,7 +50,7 @@ class Item extends Component {
                   },
                   images: []
                 }
-                item.number = this.number.value
+                item.inventoryNumber = this.number.value
                 item.title = this.title.value
                 item.artist = this.artist.value
                 console.log('try to create item ...', item)
@@ -60,32 +60,29 @@ class Item extends Component {
               Add
             </button>
           </form>
-
+          <br />
           <div className='row'>
 
-            <ul class='list-group'>
-              {this.props.items.map((item, index) => ( // </li> // <li class='list-group-item' key={index}> //   {item.inventoryNumber} {item.title} {item.year}
-                <div className='card'>
-                  {/* <img
-                    className='card-img-top'
-                    src='...'
-                    alt='Card image cap'
-                  /> */}
+            {this.props.items.map((item, index) => ( // </li> // <li class='list-group-item' key={index}> //   {item.inventoryNumber} {item.title} {item.year}
+              <div class='col-sm-3'>
+                <div className='card w-75'>
                   <div class='card-body' key={index}>
                     <h5 className='card-title'>{item.inventoryNumber}</h5>
                     <p className='card-text'>Title: {item.title} </p>
-                    <a href='#' className='btn btn-primary'>Edit</a>
+                    <p className='card-text'>Artist: {item.Artist} </p>
+                    <a href='#' className='card-link'>Edit</a>
                     <a
                       href='#'
-                      className='btn btn-primary'
+                      className='card-link'
                       onClick={() => deleteItem(item._id)}
                     >
                       Delete
                     </a>
                   </div>
                 </div>
-              ))}
-            </ul>
+              </div>
+            ))}
+
           </div>
         </div>
       </div>
